@@ -1,0 +1,26 @@
+# Build Files
+*.o
+*.a
+*.bin
+*.bin.dSYM
+*.pyc
+
+# Logs
+*.log
+
+# Documentation Files
+doc/_build/*
+
+# OS Files
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+ethumbs.db
+Thumbs.db
+
+# IDE Files
+.c9
+
+# Benchmark Files
+Benchmark*.txt
