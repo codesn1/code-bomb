@@ -1,8 +1,8 @@
 # Code Bomb
 
-Code Bomb is a header-only Unit testing framework for C. It has the following features:
+Code Bomb is a header-only unit testing framework for C. It has the following features:
 - Assertions for boolean, integer, float, and string values.
-- Each test run in its own address space.
+- Each test runs in its own address space.
 - Death tests.
 - Timers.
 - Fuzzing.
