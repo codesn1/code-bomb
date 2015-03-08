@@ -25,46 +25,32 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <CodeBomb.h>
+#ifndef __CODEBOMB_Fuzzer_H
+#define __CODEBOMB_Fuzzer_H
 
-TEST(Timer1Rep)
+#ifdef __cplusplus
+extern "C"
 {
-	START_TIMER(Timer, 1)
+#endif
 
-	sleep(1);
+#include <stdio.h>
+#include <unistd.h>
+#include <signal.h>
 
-	STOP_TIMER(Timer);
+#include "Test.h"
+
+#define CB_FUZZ(type, fuzzer, repetitions, true_assertion) { \
+	type FUZZVAR; \
+	for (int cb_itr = 0; cb_itr < repetitions; cb_itr++) \
+	{ \
+		FUZZVAR = fuzzer(cb_itr); \
+		true_assertion; \
+	} \
 }
 
-TEST(Timer2Rep)
-{
-	START_TIMER(Timer, 2)
-
-	sleep(1);
-
-	STOP_TIMER(Timer);
+#ifdef __cplusplus
+extern "C"
 }
+#endif
 
-TEST(NestedTimers)
-{
-	START_TIMER(Outside, 1)
-	
-	START_TIMER(Inside, 1);
-
-	sleep(1);
-
-	STOP_TIMER(Inside);
-
-	STOP_TIMER(Outside);
-}
-
-int main(int argc, char *argv[])
-{
-	INIT(argc, argv);
-
-	RUN(Timer1Rep);
-	RUN(Timer2Rep);
-	RUN(NestedTimers);
-
-	return STATUS();
-}
+#endif

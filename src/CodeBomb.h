@@ -39,6 +39,7 @@ extern "C"
 #include "Assertions.h"
 #include "DeathTest.h"
 #include "Timing.h"
+#include "Fuzzer.h"
 
 #ifndef CB_USE_LONG_MACROS
 #define INIT(argc, argv) CB_INIT(argc, argv)
@@ -64,6 +65,7 @@ extern "C"
 #define DEATH_TEST(name) CB_DEATH_TEST(name)
 #define START_TIMER(name, repetitions) CB_START_TIMER(name, repetitions)
 #define STOP_TIMER(name) CB_STOP_TIMER(name)
+#define FUZZ(type, fuzzer, repetitions, true_assertion) CB_FUZZ(type, fuzzer, repetitions, true_assertion)
 #endif
 
 #ifdef __cplusplus

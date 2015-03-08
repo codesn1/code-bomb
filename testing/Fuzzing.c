@@ -27,44 +27,21 @@
 
 #include <CodeBomb.h>
 
-TEST(Timer1Rep)
+int echo(int x)
 {
-	START_TIMER(Timer, 1)
-
-	sleep(1);
-
-	STOP_TIMER(Timer);
+	return x;
 }
 
-TEST(Timer2Rep)
+TEST(EchoFuzz)
 {
-	START_TIMER(Timer, 2)
-
-	sleep(1);
-
-	STOP_TIMER(Timer);
-}
-
-TEST(NestedTimers)
-{
-	START_TIMER(Outside, 1)
-	
-	START_TIMER(Inside, 1);
-
-	sleep(1);
-
-	STOP_TIMER(Inside);
-
-	STOP_TIMER(Outside);
+	FUZZ(int, echo, 1000, ASSERT_LE(0, FUZZVAR));
 }
 
 int main(int argc, char *argv[])
 {
 	INIT(argc, argv);
 
-	RUN(Timer1Rep);
-	RUN(Timer2Rep);
-	RUN(NestedTimers);
+	RUN(EchoFuzz);
 
 	return STATUS();
 }

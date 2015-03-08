@@ -38,7 +38,7 @@ MKDIR=mkdir
 MKDIRFLAGS=
 
 PREFIX=/usr
-TESTS=testing/Minimal.bin testing/Assertions.bin testing/Death.bin testing/Timers.bin
+TESTS=testing/Minimal.bin testing/Assertions.bin testing/Death.bin testing/Timers.bin testing/Fuzzing.bin
 HEADERS=src/Test.h
 
 check : $(TESTS)
