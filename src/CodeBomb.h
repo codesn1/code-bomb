@@ -33,18 +33,16 @@ extern "C"
 {
 #endif
 
+#include "Init.h"
 #include "Test.h"
+#include "Version.h"
 
-#define CB_VERSION_MAJOR 0
-#define CB_VERSION_MINOR 0
-#define CB_VERSION_PATCH 1
-
-#define CB_VERSION_ALPHA 0
-#define CB_VERSION_BETA 1
-#define CB_VERSION_RELEASE 2
-#define CB_VERSION_STATUS CB_VERSION_ALPHA
-
-#define CB_VERSION "0.0.1-alpha"
+#ifndef CB_USE_LONG_MACROS
+#define INIT(argc, argv) CB_INIT(argc, argv)
+#define TEST(name) CB_TEST(name)
+#define RUN(name) CB_RUN(name)
+#define STATUS() CB_STATUS()
+#endif
 
 #ifdef __cplusplus
 extern "C"

@@ -37,28 +37,36 @@ extern "C"
 
 #include "Message.h"
 
-int cb_printedHeader = 0;
-int cb_nSucceeded = 0;
-int cb_nFailed = 0;
+int cb_n_succeeded = 0;
+int cb_n_failed = 0;
 int cb_result = 0;
 
-#define TEST(name) void cb_##name(int *cb_result)
+#define CB_TEST(name) void cb_##name(int *cb_result)
 
-#define RUN(name) { \
-	if (!cb_printedHeader) \
+#define CB_RUN(name) { \
+	if (!cb_has_been_initted) \
 	{ \
-		CB_MESSAGE_HEADER(); \
-		cb_printedHeader = 1; \
+		CB_MESSAGE_FATAL("INIT (or CB_INIT) has not been called"); \
 	} \
 	cb_result = 0; \
 	cb_##name(&cb_result); \
 	if (cb_result != 0) \
-		cb_nFailed++; \
+		cb_n_failed++; \
 	else \
-		cb_nSucceeded++; \
+		cb_n_succeeded++; \
 }
 
-#define STATUS() (cb_nFailed > 0)
+#define CB_STATUS() cb_status()
+
+int cb_status()
+{
+	if (cb_n_succeeded + cb_n_failed == 0)
+	{
+		CB_MESSAGE_WARNING("no test cases run");
+	}
+
+	return (cb_n_failed > 0);
+}
 
 #ifdef __cplusplus
 extern "C"

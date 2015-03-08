@@ -31,6 +31,13 @@ LDFLAGS=-Isrc
 RM=rm
 RMFLAGS=-rf
 
+CP=cp
+CPFLAGS=-f
+
+MKDIR=mkdir
+MKDIRFLAGS=
+
+PREFIX=/usr
 TESTS=testing/Minimal.bin
 HEADERS=src/Test.h
 
@@ -39,6 +46,13 @@ check : $(TESTS)
 
 clean :
 	$(RM) $(RMFLAGS) $(shell echo testing/*.bin testing/*.bin.dSYM)
+
+install :
+	$(MKDIR) $(MKDIRFLAGS) $(PREFIX)/include/codebomb
+	$(CP) $(CPFLAGS) $(shell echo src/*.h) $(PREFIX)/include/codebomb
+
+uninstall :
+	$(RM) $(RMFLAGS) $(PREFIX)/include/codebomb
 
 testing/%.bin : testing/%.c $(HEADERS)
 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)

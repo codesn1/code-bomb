@@ -25,18 +25,61 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define CB_USE_LONG_MACROS
-#include <CodeBomb.h>
+#ifndef __CODEBOMB_Colors_H
+#define __CODEBOMB_Colors_H
 
-CB_TEST(Empty)
+#ifdef __cplusplus
+extern "C"
 {
+#endif
+
+#include <stdio.h>
+
+#include "Init.h"
+
+const char *cb_color_default()
+{
+	if (cb_output_no_color)
+		return "";
+	else
+		return "\033[0;0m";
 }
 
-int main(int argc, char *argv[])
+const char *cb_color_binary_name()
 {
-	CB_INIT(argc, argv);
-
-	CB_RUN(Empty);
-
-	return CB_STATUS();
+	if (cb_output_no_color)
+		return "";
+	else
+		return "\033[1;35m";
 }
+
+const char *cb_color_output_value()
+{
+	if (cb_output_no_color)
+		return "";
+	else
+		return "\033[0;32m";
+}
+
+const char *cb_color_option_name()
+{
+	if (cb_output_no_color)
+		return "";
+	else
+		return "\033[0;32m";
+}
+
+const char *cb_color_option_value()
+{
+	if (cb_output_no_color)
+		return "";
+	else
+		return "\033[1;28m";
+}
+
+#ifdef __cplusplus
+extern "C"
+}
+#endif
+
+#endif

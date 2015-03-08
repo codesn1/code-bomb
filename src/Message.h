@@ -34,13 +34,13 @@ extern "C"
 #endif
 
 #include <stdio.h>
+#include <unistd.h>
 
-#define CB_MESSAGE_HEADER() { \
-	printf("= %s\n", argv[0]); \
-	printf("=="); \
-	for (int i = 0; argv[0][i] != 0; i++) \
-		putc('=', stdout); \
-	printf("\n"); \
+#define CB_MESSAGE_WARNING(msg, ...) printf("CodeBomb: warning: " msg "\n", ##__VA_ARGS__);
+
+#define CB_MESSAGE_FATAL(msg, ...) { \
+	fprintf(stderr, "CodeBomb: FATAL: " msg "\n", ##__VA_ARGS__); \
+	_exit(1); \
 }
 
 #ifdef __cplusplus

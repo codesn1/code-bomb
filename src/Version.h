@@ -25,18 +25,28 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define CB_USE_LONG_MACROS
-#include <CodeBomb.h>
+#ifndef __CODEBOMB_Version_H
+#define __CODEBOMB_Version_H
 
-CB_TEST(Empty)
+#ifdef __cplusplus
+extern "C"
 {
+#endif
+
+#define CB_VERSION_MAJOR 0
+#define CB_VERSION_MINOR 0
+#define CB_VERSION_PATCH 1
+
+#define CB_VERSION_ALPHA 0
+#define CB_VERSION_BETA 1
+#define CB_VERSION_RELEASE 2
+#define CB_VERSION_STATUS CB_VERSION_ALPHA
+
+#define CB_VERSION "0.0.1-alpha"
+
+#ifdef __cplusplus
+extern "C"
 }
+#endif
 
-int main(int argc, char *argv[])
-{
-	CB_INIT(argc, argv);
-
-	CB_RUN(Empty);
-
-	return CB_STATUS();
-}
+#endif
