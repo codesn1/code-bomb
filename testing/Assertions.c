@@ -27,15 +27,41 @@
 
 #include <CodeBomb.h>
 
-TEST(Empty)
+TEST(IntegerAssertions)
 {
+	ASSERT_TRUE(1);
+	ASSERT_FALSE(0);
+	ASSERT_EQ(1, 1);
+	ASSERT_NE(1, 2);
+	ASSERT_LT(1, 2);
+	ASSERT_LE(1, 1);
+	ASSERT_GT(2, 1);
+	ASSERT_GE(1, 1);
+}
+
+TEST(FloatAssertions)
+{
+	ASSERT_FEQ(5.0, 5.0);
+	ASSERT_FNE(5.0, 3.0);
+	ASSERT_FLT(3.0, 5.0);
+	ASSERT_FLE(3.0, 3.0);
+	ASSERT_FGT(5.0, 3.0);
+	ASSERT_FGE(3.0, 3.0);
+}
+
+TEST(StringAssertions)
+{
+	ASSERT_SEQ("hi", "hi");
+	ASSERT_SNE("hi", "lo");
 }
 
 int main(int argc, char *argv[])
 {
 	INIT(argc, argv);
 
-	RUN(Empty);
+	RUN(IntegerAssertions);
+	RUN(FloatAssertions);
+	RUN(StringAssertions);
 
 	return STATUS();
 }

@@ -25,8 +25,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __CODEBOMB_Test_H
-#define __CODEBOMB_Test_H
+#ifndef __CODEBOMB_DeathTest_H
+#define __CODEBOMB_DeathTest_H
 
 #ifdef __cplusplus
 extern "C"
@@ -34,79 +34,32 @@ extern "C"
 #endif
 
 #include <stdio.h>
-#include <pthread.h>
+#include <unistd.h>
+#include <signal.h>
 
-#include "Message.h"
-#include "Colors.h"
+#include "Test.h"
 
-int cb_n_succeeded = 0;
-int cb_n_failed = 0;
-int cb_result = 0;
+char *cb_current_death_test = "";
 
-#define CB_TEST_FAIL() {cb_test_fail(cb_result); return;}
+#define CB_DEATH_TEST(name) void cb_death_##name(int *cb_result); \
+void cb_##name(int *cb_result) { \
+	struct sigaction cb_sa; \
+	memset(&cb_sa, 0, sizeof(sigaction)); \
+	sigemptyset(&cb_sa.sa_mask); \
+	cb_sa.sa_sigaction = cb_death_test_on_signal; \
+	cb_sa.sa_flags = SA_SIGINFO; \
+	sigaction(SIGSEGV, &cb_sa, NULL); \
+	*cb_result = 1; \
+	cb_current_death_test = #name; \
+	cb_death_##name(cb_result); \
+} \
+void cb_death_##name(int *cb_result)
 
-#define CB_TEST(name) void cb_##name(int *cb_result)
-
-#define CB_RUN(name) cb_run(cb_##name, #name)
-
-#define CB_STATUS() cb_status()
-
-void cb_test_fail(int *r)
+void cb_death_test_on_signal(int signal, siginfo_t *si, void *arg)
 {
-	*r = 1;
-
-	if (cb_test_fail_on_first_assertion)
-		_exit(1);
-}
-
-int cb_status()
-{
-	if (cb_n_succeeded + cb_n_failed == 0)
-	{
-		CB_MESSAGE_WARNING("no test cases run");
-	}
-
-	if (cb_n_failed == 0)
-	{
-		printf("= %sAll tests passed!%s\n", cb_color_pass(), cb_color_default());
-		return 0;
-	}
-	else
-	{
-		printf("= %s%i%s test%s passed, %s%i%s test%s failed.\n", cb_color_pass(), cb_n_succeeded, cb_color_default(), (cb_n_succeeded == 1 ? "" : "s"), cb_color_fail(), cb_n_failed, cb_color_default(), (cb_n_failed == 1 ? "" : "s"));
-		return 1;
-	}
-}
-
-void cb_run(void (*test)(int *), const char *name)
-{
-	CB_MESSAGE_TEST(name);
-	if (!cb_has_been_initted)
-	{
-		CB_MESSAGE_FATAL("INIT (or CB_INIT) has not been called");
-	}
-
 	cb_result = 0;
-	pthread_t thread;
-
-	if (pthread_create(&thread, NULL, (void *(*)(void *))test, (void *)&cb_result))
-	{
-		CB_MESSAGE_FATAL("pthread_create failed");
-		perror("perror: ");
-	}
-
-	pthread_join(thread, NULL);
-
-	if (cb_result != 0)
-	{
-		cb_n_failed++;
-		if (cb_test_fail_on_first_test_case)
-			_exit(cb_status());
-	}
-	else
-	{
-		cb_n_succeeded++;
-	}
+	printf("=     death test '%s%s%s' died successfully!\n", cb_color_pass(), cb_current_death_test, cb_color_default());
+	pthread_exit(0);
 }
 
 #ifdef __cplusplus

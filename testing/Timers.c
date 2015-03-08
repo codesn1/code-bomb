@@ -27,15 +27,30 @@
 
 #include <CodeBomb.h>
 
-TEST(Empty)
+TEST(Timer1Rep)
 {
+	START_TIMER(Timer, 1)
+
+	sleep(1);
+
+	STOP_TIMER(Timer);
+}
+
+TEST(Timer2Rep)
+{
+	START_TIMER(Timer, 2)
+
+	sleep(1);
+
+	STOP_TIMER(Timer);
 }
 
 int main(int argc, char *argv[])
 {
 	INIT(argc, argv);
 
-	RUN(Empty);
+	RUN(Timer1Rep);
+	RUN(Timer2Rep);
 
 	return STATUS();
 }

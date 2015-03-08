@@ -36,6 +36,13 @@ extern "C"
 #include <stdio.h>
 #include <unistd.h>
 
+#define CB_MESSAGE_TEST(name) printf("= Running test '%s%s%s'...\n", cb_color_test_name(), name, cb_color_default())
+
+#define CB_MESSAGE_ASSERTION_FAILED(desc) printf("=     Assertion '%s%s%s' failed!\n=       on %s%s:%i%s\n", cb_color_fail(), desc, cb_color_default(), cb_color_location(), __FILE__, __LINE__, cb_color_default())
+#define CB_MESSAGE_ASSERTION_IVALUE(name, value) printf("=       %s: %li == %lu == %08x\n", name, value, (unsigned long)value, (unsigned int)value)
+#define CB_MESSAGE_ASSERTION_FVALUE(name, value) printf("=       %s: %f\n", name, (float)value)
+#define CB_MESSAGE_ASSERTION_SVALUE(name, value) printf("=       %s: \"%s\"\n", name, (char *)value)
+
 #define CB_MESSAGE_WARNING(msg, ...) printf("CodeBomb: warning: " msg "\n", ##__VA_ARGS__);
 
 #define CB_MESSAGE_FATAL(msg, ...) { \

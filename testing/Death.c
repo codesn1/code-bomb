@@ -27,15 +27,17 @@
 
 #include <CodeBomb.h>
 
-TEST(Empty)
+DEATH_TEST(NullAccess)
 {
+	int *blah = NULL;
+	*blah = 5;
 }
 
 int main(int argc, char *argv[])
 {
 	INIT(argc, argv);
 
-	RUN(Empty);
+	RUN(NullAccess);
 
 	return STATUS();
 }

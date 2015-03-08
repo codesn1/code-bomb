@@ -77,6 +77,38 @@ const char *cb_color_option_value()
 		return "\033[1;28m";
 }
 
+const char *cb_color_pass()
+{
+	if (cb_output_no_color)
+		return "";
+	else
+		return "\033[1;32m";
+}
+
+const char *cb_color_fail()
+{
+	if (cb_output_no_color)
+		return "";
+	else
+		return "\033[1;31m";
+}
+
+const char *cb_color_test_name()
+{
+	if (cb_output_no_color)
+		return "";
+	else
+		return "\033[0;35m";
+}
+
+const char *cb_color_location()
+{
+	if (cb_output_no_color)
+		return "";
+	else
+		return "\033[4m\033[1;28m";
+}
+
 #ifdef __cplusplus
 extern "C"
 }

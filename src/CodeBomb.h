@@ -36,12 +36,34 @@ extern "C"
 #include "Init.h"
 #include "Test.h"
 #include "Version.h"
+#include "Assertions.h"
+#include "DeathTest.h"
+#include "Timing.h"
 
 #ifndef CB_USE_LONG_MACROS
 #define INIT(argc, argv) CB_INIT(argc, argv)
 #define TEST(name) CB_TEST(name)
 #define RUN(name) CB_RUN(name)
 #define STATUS() CB_STATUS()
+#define ASSERT_TRUE(expr) CB_ASSERT_TRUE(expr)
+#define ASSERT_FALSE(expr) CB_ASSERT_FALSE(expr)
+#define ASSERT_EQ(exp, act) CB_ASSERT_EQ(exp, act)
+#define ASSERT_NE(lhs, rhs) CB_ASSERT_NE(lhs, rhs)
+#define ASSERT_LT(lhs, rhs) CB_ASSERT_LT(lhs, rhs)
+#define ASSERT_LE(lhs, rhs) CB_ASSERT_LE(lhs, rhs)
+#define ASSERT_GT(lhs, rhs) CB_ASSERT_GT(lhs, rhs)
+#define ASSERT_GE(lhs, rhs) CB_ASSERT_GE(lhs, rhs)
+#define ASSERT_FEQ(exp, act) CB_ASSERT_FEQ(exp, act)
+#define ASSERT_FNE(lhs, rhs) CB_ASSERT_FNE(lhs, rhs)
+#define ASSERT_FLT(lhs, rhs) CB_ASSERT_FLT(lhs, rhs)
+#define ASSERT_FLE(lhs, rhs) CB_ASSERT_FLE(lhs, rhs)
+#define ASSERT_FGT(lhs, rhs) CB_ASSERT_FGT(lhs, rhs)
+#define ASSERT_FGE(lhs, rhs) CB_ASSERT_FGE(lhs, rhs)
+#define ASSERT_SEQ(exp, act) CB_ASSERT_SEQ(exp, act)
+#define ASSERT_SNE(lhs, rhs) CB_ASSERT_SNE(lhs, rhs)
+#define DEATH_TEST(name) CB_DEATH_TEST(name)
+#define START_TIMER(name, repetitions) CB_START_TIMER(name, repetitions)
+#define STOP_TIMER(name) CB_STOP_TIMER(name)
 #endif
 
 #ifdef __cplusplus
