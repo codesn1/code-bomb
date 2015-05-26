@@ -22,15 +22,50 @@
 
 #include <CodeBomb.h>
 
-TEST(Empty)
-{
-}
+COMPILATION_TEST_C(CSuccess, "clang --std=c99", " \
+	#include <stdio.h>\n \
+\n \
+	int main()\n \
+	{\n \
+		return 0;\n \
+	}\n \
+");
+
+COMPILATION_TEST_C(CFail, "clang --std=c99", " \
+	#include <stdio.h>\n \
+\n \
+	int main(\n \
+	{\n \
+		return 0;\n \
+	}\n \
+");
+
+COMPILATION_TEST_CXX(CxxSuccess, "clang++ -std=c++11", " \
+	#include <iostream>\n \
+\n \
+	int main()\n \
+	{\n \
+		return 0;\n \
+	}\n \
+");
+
+COMPILATION_TEST_CXX(CxxFail, "clang++ -std=c++11", " \
+	#include <iostream>\n \
+\n \
+	int main(\n \
+	{\n \
+		return 0;\n \
+	}\n \
+");
 
 int main(int argc, char *argv[])
 {
 	INIT(argc, argv);
 
-	RUN(Empty);
+	RUN(CSuccess);
+	//RUN(CFail);
+	RUN(CxxSuccess);
+	//RUN(CxxFail);
 
 	return STATUS();
 }

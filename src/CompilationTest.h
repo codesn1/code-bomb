@@ -20,17 +20,72 @@
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
 
-#include <CodeBomb.h>
+#ifndef __CODEBOMB_CompilationTest_H
+#define __CODEBOMB_CompilationTest_H
 
-TEST(Empty)
+#ifdef __cplusplus
+extern "C"
 {
+#endif
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+#include "Test.h"
+
+#define CB_COMPILATION_TEST_C(name, cmd, code) void cb_##name( \
+	int *cb_result) \
+{ \
+	*cb_result = cb_compile_c(cmd, code); \
 }
 
-int main(int argc, char *argv[])
-{
-	INIT(argc, argv);
-
-	RUN(Empty);
-
-	return STATUS();
+#define CB_COMPILATION_TEST_CXX(name, cmd, code) void cb_##name( \
+	int *cb_result) \
+{ \
+	*cb_result = cb_compile_cxx(cmd, code); \
 }
+
+int cb_compile_c(const char *cmd, const char *code)
+{
+	char srcpath[1024];
+	sprintf(srcpath, "/tmp/codebomb_compilation.c");
+
+	char binpath[1024];
+	sprintf(binpath, "/tmp/codebomb_compilation.bin");
+
+	FILE *f = fopen(srcpath, "w");
+	fprintf(f, "%s\n", code);
+	fclose(f);
+
+	char cmdline[1024];
+	sprintf(cmdline, "%s %s -o %s", cmd, srcpath, binpath);
+	int e = system(cmdline);
+
+	return (e != 0);
+}
+
+int cb_compile_cxx(const char *cmd, const char *code)
+{
+	char srcpath[1024];
+	sprintf(srcpath, "/tmp/codebomb_compilation.cpp");
+
+	char binpath[1024];
+	sprintf(binpath, "/tmp/codebomb_compilation.bin");
+
+	FILE *f = fopen(srcpath, "w");
+	fprintf(f, "%s\n", code);
+	fclose(f);
+
+	char cmdline[1024];
+	sprintf(cmdline, "%s %s -o %s", cmd, srcpath, binpath);
+	int e = system(cmdline);
+
+	return (e != 0);
+}
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

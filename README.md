@@ -6,8 +6,9 @@ Code Bomb is a header-only unit testing framework for C. It has the following fe
 - Death tests.
 - Timers.
 - Fuzzing.
+- Compilation tests.
 
-Code Bomb is licensed under the BSD-2 license.
+Code Bomb is licensed under the MIT license.
 
     #include <stdio.h>
     #include <CodeBomb.h>
