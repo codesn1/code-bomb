@@ -39,13 +39,13 @@ char *cb_current_death_test = (char *)"";
 #define CB_DEATH_TEST(name) void cb_death_##name(int *cb_result); \
 void cb_##name(int *cb_result) { \
 	struct sigaction cb_sa; \
-	memset(&cb_sa, 0, sizeof(sigaction)); \
+	memset(&cb_sa, 0, sizeof(struct sigaction)); \
 	sigemptyset(&cb_sa.sa_mask); \
 	cb_sa.sa_sigaction = cb_death_test_on_signal; \
 	cb_sa.sa_flags = SA_SIGINFO; \
 	sigaction(SIGSEGV, &cb_sa, NULL); \
 	*cb_result = 1; \
-	cb_current_death_test = #name; \
+	cb_current_death_test = (char *)#name; \
 	cb_death_##name(cb_result); \
 } \
 void cb_death_##name(int *cb_result)
